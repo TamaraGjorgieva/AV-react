@@ -1,28 +1,49 @@
 export const listStudents = () => {
     return [
         {
-            firstName: "Tamara",
-            lastName:"Gjorgieva",
-            index: "163004",
-            direction: "PET"},
+            firstName: 'Tamara ',
+            lastName: 'Gjorgieva',
+            index: '163004',
+            studyProgram: 'Networking Technologies'
+        },
         {
-            firstName: "Ana",
-            lastName:"Anevska",
-            index: "123012",
-            direction: "KNI"},
+            firstName: 'Pero',
+            lastName: 'Perovski',
+            index: '113051',
+            studyProgram: 'Networking Technologies'
+        },
         {
-            firstName: "Dimitar ",
-            lastName:"Dimitrov",
-            index: "173127",
-            direction: "MT"},
+            firstName: 'Ana',
+            lastName: 'Aneva',
+            index: '111111',
+            studyProgram: 'Networking Technologies'
+        },
         {
-            firstName: "Stefan",
-            lastName:"Stefanovski",
-            index: "151235",
-            direction: "KNI"}
-
-
-
+            firstName: 'Marija',
+            lastName: 'Petrovska',
+            index: '160001',
+            studyProgram: 'Computer Sciences and Engineering'
+        },
+        {
+            firstName: 'Sara',
+            lastName: 'Stefanovska',
+            index: '160095',
+            studyProgram: 'Application of Information Technologies'
+        },
+        {
+            firstName: 'Nikola',
+            lastName: 'Nikolovski',
+            index: '121212',
+            studyProgram: 'Networking Technologies'
+        }
     ];
 };
-export default listStudents;
+
+export const cloneStudents = (state,index,student) => {
+    const newStudentsArrayRef = [
+        ...state.students
+    ];
+
+    newStudentsArrayRef[index] = student;
+    return newStudentsArrayRef;
+}

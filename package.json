@@ -10,6 +10,7 @@
     "popper.js": "^1.14.5",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-paginate": "^6.0.0",
     "react-scripts": "2.1.1",
     "react-table": "^6.8.6"
   },

@@ -1,40 +1,81 @@
+import React, {  } from 'react';
+import './EditStudentDetails.css';
 
+const EditStudentDetails = (props) => {
 
-import React, {Component} from 'react';
+    const onFormSubmit = (formSubmitEvent) => {
+        formSubmitEvent.preventDefault();
 
-class EditStudentDetails extends Component {
+        keepDefaultValues(formSubmitEvent);
 
+        props.onStudentEdit(
+            {
+                firstName: formSubmitEvent.target.firstName.value,
+                lastName: formSubmitEvent.target.lastName.value,
+                index: formSubmitEvent.target.index.value,
+                studyProgram: formSubmitEvent.target.studyProgram.value
+            }
+        );
+    };
 
-    render() {
-        let styleData="h5";
+    var keepDefaultValues = (formSubmitEvent) => {
+        if(formSubmitEvent.target.firstName.value.length === 0)
+            formSubmitEvent.target.firstName.value = props.student.firstName;
+        if(formSubmitEvent.target.lastName.value.length === 0)
+            formSubmitEvent.target.lastName.value = props.student.lastName;
+        if(formSubmitEvent.target.index.value.length === 0)
+            formSubmitEvent.target.index.value = props.student.index;
+        if(formSubmitEvent.target.studyProgram.value.length === 0)
+            formSubmitEvent.target.studyProgram.value = props.student.studyProgram;
+    };
 
-        return (
-            <form className={'container mt-5'} onSubmit={this.props.handleSubmitCB}>
-                <div className="row">
-                    <div className="col-2">
-                        <label className={styleData}>Enter name:</label>
-                        <input className="form-control" type='text'/>
+    return (
+        <div id="form-wrapper" className="list-group-item">
+            <form onSubmit={onFormSubmit} >
+                <h5> Edit {props.student.firstName} {props.student.lastName} </h5>
+                <div id="avatar">
+                    <span><i className="fa fa-user fa"> </i></span>
+                </div>
 
-                    </div>
-                    <div className="col-2">
-                        <label className={styleData}>Enter lastname:</label>
-                        <input className="form-control" type='text'/>
-                    </div>
-                    <div className="col-2"><label className={styleData}>Enter index:</label><input
-                        className="form-control" type='text'/></div>
-                    <div className="col-2"><label className={styleData}>Enter direction:</label><input
-                        className="form-control" type='text'/></div>
-                    <div className="col-3">
-                        <button type="submit" className={'btn btn-success mt-4'}> Save</button>
+                <div className="form-group">
+                    <label htmlFor="FirstName">First Name: {props.student.firstName}</label>
+                    <div className="input-group">
+                        <input type="text" className="form-control" name="firstName" id="FirstName"
+                               placeholder="Edit First Name"/>
                     </div>
                 </div>
 
+                <div className="form-group">
+                    <label htmlFor="LastName">Last Name: {props.student.lastName}</label>
+                    <div className="input-group">
+                        <input type="text" className="form-control" name="lastName" id="LirstName"
+                               placeholder="Edit Last Name"/>
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="Index">Index: {props.student.index}</label>
+                    <div className="input-group">
+                        <input type="text" className="form-control" name="index" id="Index"
+                               placeholder="Edit Index"/>
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="StudyProgram">Study Program: {props.student.studyProgram}</label>
+                    <div className="input-group">
+                        <input type="text" className="form-control" name="studyProgram" id="StudyProgram"
+                               placeholder="Edit Study Program"/>
+                    </div>
+                </div>
+
+                <div id="kopce" className="form-group">
+                    <button type="submit" className="btn btn-success btn-lg">Submit</button>
+                </div>
+
             </form>
-
-
-        )
-    }
-    }
-
+        </div>
+    );
+}
 
 export default EditStudentDetails;

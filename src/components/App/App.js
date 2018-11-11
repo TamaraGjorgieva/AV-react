@@ -1,60 +1,65 @@
 import React, { Component } from 'react';
 import './App.css';
-import EditStudentDetails from '../EditStudentDetails/EditStudentDetails';
-import StudentsList from '../StudentsList/StudentsList';
-import listStudents from '../../repository/studentRepository';
-
+import {cloneStudents, listStudents} from "../../repository/studentRepository";
+import StudentsList from "../StudentsList/StudentsList";
+import EditStudentDetails from "../EditStudentDetails/EditStudentDetails";
+const _ = require('lodash');
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {students:listStudents()};
+
+        this.state= {
+            students: listStudents(),
+            studentSelected: null
+        };
     }
 
-    handleSubmit=(event)=>{
-        event.preventDefault();
-        let obj={
-            firstName: event.target[0].value,
-            lastName:event.target[1].value,
-            index: event.target[2].value,
-            direction: event.target[3].value,
-            key:event.target[2].value};
-        event.target[0].value="";
-        event.target[1].value="";
-        event.target[2].value="";
-        event.target[3].value="";
-        let arr=this.state.students;
-        arr.push(obj);
-        this.setState({students:arr});
+    onStudentChange = (student) => {
+        this.setState((state,props) => {
+            return {
+                studentSelected: student
+            };
+        });
     };
 
+    onStudentEdit = (student) => {
 
+        let studentIndex = this.state.students.findIndex((obj) => _.isEqual(obj, this.state.studentSelected));
 
+        this.setState((state,props) => {
+            const newStudentsArrayRef = cloneStudents(state,studentIndex,student);
+            return { students: newStudentsArrayRef,
+                studentSelected: null}
+        });
+    }
 
     render() {
 
-        return ([
-
+        return (
             <div className="container">
-                <EditStudentDetails handleSubmitCB={this.handleSubmit}  /> ,
-            <table   className={'table table-striped table-bordered mt-5 text-center mw-100'}>
-                <thead>
-                <tr>
-                   <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>Index</th>
-                    <th>Direction</th>
-                    <th>Show more details</th>
-                </tr>
-                </thead>
-                <tbody>
-                <StudentsList students={this.state.students}/>
-                </tbody>
-            </table>
+                <h3 className="text-success font-weight-bold mt-5">Click to edit  </h3>
+                   <div className="row">
+                    <div className="col-8">
+                        <StudentsList onStudentChange = {(student) => this.onStudentChange(student)} students={this.state.students}/>
+                    </div>
+                   </div>
+
+                    { this.state.studentSelected &&
+                    <div className="row">
+                    <div className="col-8 mr-5">
+                        <EditStudentDetails student={this.state.studentSelected} onStudentEdit={this.onStudentEdit} />
+                    </div></div>
+                    }
+
+
+
             </div>
-        ]);
+        );
     }
+
 }
 
 export default App;
+
